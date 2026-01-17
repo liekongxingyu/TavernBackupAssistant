@@ -1,0 +1,12 @@
+{
+  "display_name": "Tavern Backup Assistant (酒馆备份助手)",
+  "name": "tavern-backup-assistant",
+  "author": "SenriYuki",
+  "version": "1.0.0",
+  "description": "📦 酒馆一键备份还原工具。支持全量备份数据、插件、主题及配置文件。/ One-click backup and restore tool for SillyTavern.",
+  "js": "index.js",
+  "css": "style.css",
+  "type": "global",
+  "require_server": true,
+  "icon": "icon.png"
+}
