@@ -76,24 +76,32 @@ function cleanTempFolder() {
  * 辅助：自动部署前端文件
  */
 function installFrontend() {
-  try {
-    if (!fs.existsSync(EXTENSION_DIR))
-      fs.mkdirSync(EXTENSION_DIR, { recursive: true });
-    ["index.js", "style.css", "manifest.json", "icon.png"].forEach((file) => {
-      const src = path.join(PLUGIN_DIR, "public", file);
-      const dest = path.join(EXTENSION_DIR, file);
-      if (fs.existsSync(src)) fs.copyFileSync(src, dest);
-    });
-    console.log("[BackupAssistant] UI Extension files installed/updated.");
-  } catch (err) {
-    console.error("[BackupAssistant] UI Install Error:", err);
-  }
+    try {
+        if (!fs.existsSync(EXTENSION_DIR)) fs.mkdirSync(EXTENSION_DIR, { recursive: true });
+        
+        // Files from root / 根目录文件
+        ['manifest.json', 'icon.png'].forEach(file => {
+            const src = path.join(PLUGIN_DIR, file);
+            const dest = path.join(EXTENSION_DIR, file);
+            if (fs.existsSync(src)) fs.copyFileSync(src, dest);
+        });
+
+        // Files from public folder / public 目录文件
+        ['index.js', 'style.css'].forEach(file => {
+            const src = path.join(PLUGIN_DIR, 'public', file);
+            const dest = path.join(EXTENSION_DIR, file);
+            if (fs.existsSync(src)) fs.copyFileSync(src, dest);
+        });
+
+        console.log('[BackupAssistant] UI Extension files installed/updated.');
+    } catch (err) {
+        console.error('[BackupAssistant] UI Install Error:', err);
+    }
 }
 
 function updateStatus(progress, message, status = "working") {
   currentTask.progress = Math.min(100, Math.max(0, Math.round(progress)));
   currentTask.message = message;
-  currentTask.status = status;
 }
 
 function init(app, config) {
